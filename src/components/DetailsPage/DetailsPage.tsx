@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useParams, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { abbreviateNumber } from '../../utils/abbreviateNumber'
+import API_KEY from '../../utils/API'
 
 const Wrapper = styled.div`
   margin-inline: 20px;
@@ -53,7 +54,7 @@ const DetailsPage: React.FC = () => {
 
   useEffect(() => {
     axios(
-      `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=Z9G6QC01TR4WZ6C8`
+      `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
     )
       .then((response) => {
         if (response.data.Name) {

@@ -4,6 +4,7 @@ import { Input } from 'antd'
 const { Search } = Input
 import axios from 'axios'
 import { Button } from 'antd'
+import API_KEY from '../../utils/API'
 
 const Wrapper = styled.div`
   padding-top: 20px;
@@ -70,7 +71,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({
     if (value) {
       setIsLoading(true)
       axios(
-        `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=Z9G6QC01TR4WZ6C8`
+        `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${API_KEY}`
       )
         .then((response) => {
           if (response.data.bestMatches) {
