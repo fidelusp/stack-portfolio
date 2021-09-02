@@ -64,6 +64,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({
   const [results, setResults] = useState<{ bestMatches: [] }>({
     bestMatches: [],
   })
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (value) {
@@ -72,8 +73,12 @@ const SearchSection: React.FC<SearchSectionProps> = ({
         `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=Z9G6QC01TR4WZ6C8`
       )
         .then((response) => {
-          setResults(response.data)
-          setIsLoading(false)
+          if (response.data.bestMatches) {
+            setResults(response.data)
+            setIsLoading(false)
+          } else {
+            setError(true)
+          }
         })
         .catch((err) => console.log('Error:', err))
     } else {
@@ -85,11 +90,13 @@ const SearchSection: React.FC<SearchSectionProps> = ({
     setValue(value)
   }
 
-  const resultsElements = isLoading ? (
+  const resultsElements = error ? (
+    <div>Something went wrong</div>
+  ) : isLoading ? (
     <div>Loading...</div>
-  ) : results.bestMatches.length !== 0 ? (
+  ) : results.bestMatches?.length !== 0 ? (
     <Results>
-      {results.bestMatches.map((item, key) => {
+      {results.bestMatches?.map((item, key) => {
         const isDisabled = !companyList.some(
           (company) => company.symbol === item['1. symbol']
         )
@@ -123,7 +130,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({
       </div>
 
       <ResultsSection>
-        <span style={{ fontSize: '20px' }}>Search Results</span>{' '}
+        <span style={{ fontSize: '20px' }}>Search Results</span>
         {resultsElements}
       </ResultsSection>
     </Wrapper>

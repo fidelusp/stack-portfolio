@@ -11,7 +11,6 @@ export function abbreviateNumber(value: number): string {
           : value
         ).toPrecision(precision)
       )
-      console.log(shortValue)
 
       const dotLessShortValue = (shortValue + '').replace(
         /[^a-zA-Z 0-9]+/g,

@@ -56,8 +56,6 @@ const DetailsPage: React.FC = () => {
       `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=Z9G6QC01TR4WZ6C8`
     )
       .then((response) => {
-        console.log(response.data)
-
         if (response.data.Name) {
           setCompanyData({
             companyName: response.data.Name,
